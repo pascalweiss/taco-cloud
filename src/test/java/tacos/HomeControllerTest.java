@@ -1,32 +1,35 @@
 package tacos;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(HomeController.class)
-class HomeControllerTest {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-    @Autowired
-    private MockMvc mockMvc;
+@RunWith(SpringRunner.class)
+@WebMvcTest   // <1>
+public class HomeControllerTest {
 
-    @Test public void testHomePage() throws Exception {
-        mockMvc.perform(get("/"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("home"))
-            .andExpect(content().string(
-                    containsString("Welcome to...")
-            ));
-    }
+  @Autowired
+  private MockMvc mockMvc;   // <2>
 
+  @Test
+  public void testHomePage() throws Exception {
+    mockMvc.perform(get("/"))    // <3>
+    
+      .andExpect(status().isOk())  // <4>
+      
+      .andExpect(view().name("home"))  // <5>
+      
+      .andExpect(content().string(           // <6>
+          containsString("Welcome to...")));  
+  }
 
 }
